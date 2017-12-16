@@ -71,12 +71,11 @@ class FastTradingEnv(object):
         # record nav (只在LONG position情况下累积nav)
         self._navs[self._step] = last_nav * (nav_pct_change if action == 1 else 1.0)
 
-        if not self._step == 0:
-            # trading fee for changing trade position
-            if abs(self._actions[self._step-1] - action) > 0:
-                reward = self._navs[self._step] * self.trading_cost_pct_change - 1.0
         if done:
             # episode finished, force sold
+            action = 0
+        if not self._step == 0 and abs(self._actions[self._step-1] - action) > 0:
+            # trading fee for changing trade position
             reward = self._navs[self._step] * self.trading_cost_pct_change - 1.0
         info = {
             'step': self._step,

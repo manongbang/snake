@@ -21,7 +21,7 @@ class FastTradingEnvTestCase(unittest.TestCase):
             while not done:
                 action = np.random.choice(self.env.action_options(), 1)  # random
                 observation, reward, done, info = self.env.step(action)
-                self.assertTrue(reward >= 0.0)
+                self.assertTrue(reward >= -1.0)
                 count += 1
         self.assertEqual(count, self.days)
 
